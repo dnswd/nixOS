@@ -1,5 +1,6 @@
 #!/bin/sh
 pushd ~/.dotfiles
-home-manager switch -f ./users/alice/home.nix
+nix build .#homeManagerConfigurations.alice.activationPackage
+./result/activate
 popd
 

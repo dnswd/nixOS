@@ -21,6 +21,21 @@
     };
 
   in {
+    homeManagerConfigurations = {
+      alice = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+	modules = [
+          ./users/alice/home.nix {
+	    home = {
+              username = "alice";
+	      homeDirectory = "/home/alice";
+	      stateVersion = "22.11";
+	    };
+	  }
+	];
+      };
+    };
+
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         inherit system;
