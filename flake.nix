@@ -47,7 +47,14 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.alice = {
-                imports = [ (import ./users/alice/home.nix) ];
+                imports = [ 
+                  (import ./users/alice/home.nix) 
+                  (import ./apps/git.nix) 
+                  (import ./apps/kitty.nix) 
+                  (import ./apps/zsh) 
+                  (import ./apps/variable.nix) 
+                  (import ./apps/xdg.nix) 
+                ];
               };
             };
           }

@@ -21,7 +21,7 @@
 
   # Packages
   home.packages = [
-    pkgs.alacritty
+    pkgs.neovim
     pkgs.git
     pkgs.git-crypt
     pkgs.gnupg
