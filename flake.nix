@@ -53,8 +53,10 @@
                   (import ./apps/xdg.nix) 
                   (import ./apps/git.nix) 
                   (import ./apps/kitty.nix) 
-                  (import ./apps/zsh) 
+                  (import ./apps/zsh)
                   (import ./apps/variable.nix) 
+                  (import ./apps/nvim.nix) 
+                  (import ./apps/direnv.nix) 
                 ];
               };
             };
