@@ -7,13 +7,20 @@
       confirm_os_window_close = 0;
       enable_audio_bell = false;
       allow_remote_control = true;
+      copy_on_select = true;
       window_padding_width = "16";
       background_opacity = "0.8";
       include = "mytheme.conf";
       cursor_text_color = "background";
     };
+    keybindings = {
+      "cmd+w" = "no_op";
+      "cmd+t" = "no_op";
+      "cmd+enter" = "no_op";
+    };
   };
-    xdg.configFile."kitty/themes/mydark.conf".text = ''
+
+  xdg.configFile."kitty/themes/mydark.conf".text = ''
     # mydark theme
     background #0b1c2d
     foreground #f9fcff

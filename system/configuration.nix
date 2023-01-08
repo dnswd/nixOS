@@ -69,6 +69,8 @@
     initialPassword = "password";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
+  users.defaultUserShell = pkgs.zsh;
+  environment.pathsToLink = [ "/share/zsh" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
