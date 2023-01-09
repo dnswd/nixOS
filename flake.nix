@@ -14,6 +14,7 @@
       inherit system;
       config = { allowUnfree = true; };
     };
+    
     lib = nixpkgs.lib;
 
     extraSpecialArgs = {
@@ -24,15 +25,15 @@
     homeManagerConfigurations = {
       alice = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-	modules = [
+        modules = [
           ./users/alice/home.nix {
-	    home = {
+            home = {
               username = "alice";
-	      homeDirectory = "/home/alice";
-	      stateVersion = "22.11";
-	    };
-	  }
-	];
+              homeDirectory = "/home/alice";
+              stateVersion = "22.11";
+            };
+          }
+        ];
       };
     };
 
