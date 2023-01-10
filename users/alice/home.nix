@@ -21,7 +21,7 @@
 
   # Packages
   home.packages = [
-    pkgs.neovim
+    pkgs.vscode-fhs
     pkgs.git
     pkgs.git-crypt
     pkgs.gnupg
@@ -33,13 +33,5 @@
   services.gpg-agent = {
     enable = true;
     pinentryFlavor = "qt";
-  };
-
-  # Configs
-  home.file = {
-    ".config/alacritty/alacritty.yaml".text = ''
-    env:
-      TERM: xterm-256color
-    '';
   };
 }

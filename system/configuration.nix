@@ -12,6 +12,9 @@
 
   # Enable Flakes by default
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  
+  # Allow unfree
+  nixpkgs.config.allowUnfree = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -67,7 +70,7 @@
   users.users.alice = {
     isNormalUser = true;
     initialPassword = "password";
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "networkmanager" "wheel" ]; # Enable ‘sudo’ for the user.
   };
   users.defaultUserShell = pkgs.zsh;
   environment.pathsToLink = [ "/share/zsh" ];
