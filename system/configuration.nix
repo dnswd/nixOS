@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports =
@@ -66,22 +66,47 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # Fonts
+    fonts = {
+      fonts = with pkgs; [
+        fira-code
+        twitter-color-emoji
+        my.apple-nerd-fonts
+      ];
+      fontconfig = {
+        defaultFonts = {
+          emoji = [ "Twitter Color Emoji" ];
+          monospace = [ "LigaSF Mono Nerd Font" "FiraCode" ];
+          serif = [
+            "New York Small"
+            "New York Medium"
+            "New York Large"
+            "New York Extra Large"
+          ];
+          sansSerif = [ "SF Pro Text" "SF Pro Display" ];
+        };
+      };
+    };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.alice = {
     isNormalUser = true;
     initialPassword = "password";
-    extraGroups = [ "networkmanager" "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "audio" ]; # Enable ‘sudo’ for the user.
   };
   users.defaultUserShell = pkgs.zsh;
   environment.pathsToLink = [ "/share/zsh" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    busybox
-    bind
-    firefox
-  ];
+  # environment.systemPackages = with pkgs; [
+  #   busybox
+  #   bind
+  #   firefox
+  # ];
+
+  # ENable dconf for GTK
+  programs.dconf.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

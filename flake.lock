@@ -1,5 +1,17 @@
 {
   "nodes": {
+    "apple-nerd-fonts": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-SeTLhl6iFkCDowM87/BTa3mnknngjKpwY89wx8rOQGU=",
+        "type": "tarball",
+        "url": "https://github.com/EzequielRamis/apple-nerd-fonts/releases/download/1.0/apple-nerd.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/EzequielRamis/apple-nerd-fonts/releases/download/1.0/apple-nerd.tar.gz"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -39,8 +51,10 @@
     },
     "root": {
       "inputs": {
+        "apple-nerd-fonts": "apple-nerd-fonts",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "whitesur": "whitesur"
       }
     },
     "utils": {
@@ -55,6 +69,23 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "whitesur": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1645433122,
+        "narHash": "sha256-zN1pF37pmRLbbTeg3LcaPaJ6zE1mdYbXTvJCfPpcD68=",
+        "owner": "vinceliuice",
+        "repo": "WhiteSur-gtk-theme",
+        "rev": "3dca2b10d0a24bd111119c3eb94df512d7e067f5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vinceliuice",
+        "repo": "WhiteSur-gtk-theme",
+        "rev": "3dca2b10d0a24bd111119c3eb94df512d7e067f5",
         "type": "github"
       }
     }

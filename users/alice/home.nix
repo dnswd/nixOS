@@ -21,9 +21,6 @@
 
   # Packages
   home.packages = [
-    pkgs.vscode-fhs
-    pkgs.git
-    pkgs.git-crypt
     pkgs.gnupg
     pkgs.pinentry_qt
   ];

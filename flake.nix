@@ -11,9 +11,17 @@
       url =
         "https://github.com/EzequielRamis/apple-nerd-fonts/releases/download/1.0/apple-nerd.tar.gz";
     };
+
+    whitesur = {
+      flake = false;
+      # 2022-02-21 release
+      url =
+        "github:vinceliuice/WhiteSur-gtk-theme/3dca2b10d0a24bd111119c3eb94df512d7e067f5";
+    };
+
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: 
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: 
   let
     system = "x86_64-linux";
     username = "alice";
@@ -24,6 +32,13 @@
         config.allowUnfree = true;
         localSystem = { inherit system; };
       } // o);
+
+    lib = nixpkgs.lib.extend (final: prev: {
+      my = import ./lib {
+        inherit pkgs inputs;
+        lib = final;
+      };
+    });
 
     pkgs = mkPkgs {
       overlays = [
@@ -37,16 +52,9 @@
         })
       ];
     };
-    
-    lib = nixpkgs.lib.extend (final: prev: {
-      my = import ./lib {
-        inherit pkgs inputs;
-        lib = final;
-      };
-    });
 
     extraSpecialArgs = {
-      inherit pkgs system hostname username secrets;
+      inherit pkgs system hostname username;
       inherit (lib) my;
     };
 
@@ -63,7 +71,7 @@
       };
     };
 
-    nixosConfigurations.${system} = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
         nixConfig
@@ -83,12 +91,16 @@
                 (import ./apps/variable.nix) 
                 # (import ./apps/nvim.nix) 
                 (import ./apps/direnv.nix) 
+                (import ./apps/gtk-theme.nix) 
+                (import ./apps/other.nix) 
               ];
             };
           };
         }
       ];
     };
+
+    packages.${system}.default = nixosConfigurations.${hostname};
 
   };
 }
