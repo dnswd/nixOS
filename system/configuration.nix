@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   imports =
@@ -43,11 +43,33 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
-  
+
+  # services.xserver = {
+  #   enable = true;
+  #   gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
+  #   displayManager = {
+  #     sddm.enable = true;
+  #     autoLogin.enable = true;
+  #     autoLogin.user = username;
+  #     defaultSession = "plasma";
+  #     session = [
+  #        {
+  #          name = "fake";
+  #          manage = "window";
+  #          start = "";
+  #        }
+  #     ];
+  #   };
+  # };
+
+  # services = {
+  #   gnome.at-spi2-core.enable = true;
+  #   gnome.gnome-keyring.enable = true;
+  # };
+    
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -89,7 +111,7 @@
     };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.alice = {
+  users.users.${username} = {
     isNormalUser = true;
     initialPassword = "password";
     extraGroups = [ "wheel" "networkmanager" "audio" ]; # Enable ‘sudo’ for the user.
@@ -105,8 +127,8 @@
   #   firefox
   # ];
 
-  # ENable dconf for GTK
-  programs.dconf.enable = true;
+  # Enable dconf for GTK
+  # programs.dconf.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

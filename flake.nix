@@ -91,8 +91,9 @@
                 (import ./apps/variable.nix) 
                 # (import ./apps/nvim.nix) 
                 (import ./apps/direnv.nix) 
-                (import ./apps/gtk-theme.nix) 
+                # (import ./apps/gtk-theme.nix) 
                 (import ./apps/other.nix) 
+                # (import ./apps/bspwm.nix) 
               ];
             };
           };

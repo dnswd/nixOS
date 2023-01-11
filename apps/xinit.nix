@@ -9,4 +9,10 @@
       eval "$(direnv hook zsh)"
     '';
   };
+  home.pointerCursor = {
+    name = "capitaine-cursors-white";
+    package = pkgs.capitaine-cursors;
+    size = 30;
+    x11.enable = true;
+  };
 }
