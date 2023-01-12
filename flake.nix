@@ -88,12 +88,16 @@
                 (import ./apps/git.nix) 
                 (import ./apps/kitty.nix) 
                 (import ./apps/zsh)
+                (import ./apps/eww)
+                (import ./apps/rofi)
                 (import ./apps/variable.nix) 
                 # (import ./apps/nvim.nix) 
                 (import ./apps/direnv.nix) 
-                # (import ./apps/gtk-theme.nix) 
+                (import ./apps/gtk-theme.nix) 
                 (import ./apps/other.nix) 
-                # (import ./apps/bspwm.nix) 
+                (import ./apps/bspwm.nix) 
+                (import ./apps/picom.nix) 
+                (import ./apps/path.nix) 
               ];
             };
           };

@@ -16,5 +16,12 @@
 
     # theming
     fontforge-gtk
+
+    # ricing stuffs
+    xorg.xev
+    xdo # for devour
+    xdotool
+    xclip
+    service-wrapper
   ];
 }

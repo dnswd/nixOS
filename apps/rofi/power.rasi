@@ -1,0 +1,35 @@
+@theme "index"
+
+* {
+    horizontal-align: 0.5;
+}
+
+window {
+    width: 13.5em;
+}
+
+inputbar {
+    children: [ prompt ];
+}
+
+prompt {
+    padding: 0.5em 0.75em;
+    font: "sans 16px";
+    text-color: @t-prompt;
+}
+
+listview {
+    lines: 3;
+    layout: horizontal;
+    margin: 0.5em 0.5em 0.75em;
+}
+
+element {
+    padding: 1em 0em;
+    margin: 0 0.25em;
+    width: 4em;
+}
+
+element-text {
+    font: "SF Pro Text Semibold 24px";
+}

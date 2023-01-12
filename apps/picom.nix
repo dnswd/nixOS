@@ -5,7 +5,7 @@
   services.picom = {
     enable = true;
     backend = "glx";
-    experimentalBackends = true;
+    # experimentalBackends = true;
     fade = true;
     fadeDelta = 5;
     vSync = true;

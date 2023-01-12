@@ -47,28 +47,27 @@
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
 
-  # services.xserver = {
-  #   enable = true;
-  #   gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
-  #   displayManager = {
-  #     sddm.enable = true;
-  #     autoLogin.enable = true;
-  #     autoLogin.user = username;
-  #     defaultSession = "plasma";
-  #     session = [
-  #        {
-  #          name = "fake";
-  #          manage = "window";
-  #          start = "";
-  #        }
-  #     ];
-  #   };
-  # };
+#  services.xserver = {
+#    enable = true;
+#    displayManager = {
+#      sddm.enable = true;
+#      autoLogin.enable = true;
+#      autoLogin.user = username;
+#      defaultSession = "none+fake";
+#      session = [
+#         {
+#           name = "fake";
+#           manage = "window";
+#           start = "";
+#         }
+#      ];
+#    };
+#  };
 
-  # services = {
-  #   gnome.at-spi2-core.enable = true;
-  #   gnome.gnome-keyring.enable = true;
-  # };
+#  services = {
+#    gnome.at-spi2-core.enable = true;
+#    gnome.gnome-keyring.enable = true;
+#  };
     
 
   # Configure keymap in X11
@@ -128,7 +127,7 @@
   # ];
 
   # Enable dconf for GTK
-  # programs.dconf.enable = true;
+  programs.dconf.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
