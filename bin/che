@@ -1,0 +1,168 @@
+#!/bin/sh
+#   ____ _   _ _____
+#  / ___| | | | ____|
+# | |   | |_| |  _|
+# | |___|  _  | |___
+#  \____|_| |_|_____|
+#
+# CLI Helper
+
+b=$(tput bold)
+n=$(tput sgr0)
+i=$(tput sitm)
+u=$(tput smul)
+d="\e[9m"
+
+help="\
+  ${b}Usage: che [COMMAND]
+
+  ${n}A command line interface to help me manage my system.
+
+  ${b}Commands:${n}
+    dev\t\tDevelopment helpers
+    sync\tSync NixOS' configuration
+    update\tUpdate the system with latest features
+    gc\t\tClean up the system and delete older generations
+    theme\tSystem's theme settings
+    help\tPrint this help list
+"
+
+update_help="\
+  ${b}Usage: che update [COMMAND]
+
+  ${n}Update the system with latest features.
+
+  ${b}Commands:${n}
+    flake\tUpdate flake's inputs of the system
+    nix\t\tUpdate and sync NixOS
+    emacs\tUpdate Doom Emacs
+    all\t\tUpdate and sync the whole system
+    help\tPrint this help list
+"
+
+gc_help="\
+  ${b}Usage: che gc all|${u}period${n}
+
+  ${n}Clean up the system and delete older generations.
+
+  ${b}Options:${n}
+    ${u}period${n}\tDelete generations older than the specified number of days
+    all\t\tDelete all generations but current one
+    help\tPrint this help list
+"
+
+dev_help="\
+  ${b}Usage: che dev [COMMAND]
+
+  ${n}Development helpers.
+
+  ${b}Commands:${n}
+    sync ${u}PATH${n}\tSync flake and .direnv
+    help\tPrint this help list
+"
+
+theme_help="\
+  ${b}Usage: che theme [COMMAND]
+
+  ${n}System's theme settings
+
+  ${b}Commands:${n}
+    toggle\tToggle current theme
+    light\tSet light theme
+    dark\tSet dark theme
+    help\tPrint this help list
+"
+
+pushd () {
+    command pushd "$@" > /dev/null
+}
+
+popd () {
+    command popd "$@" > /dev/null
+}
+
+not_found () {
+    echo "Command '$@' not found."
+}
+
+case "$1" in
+    dev)
+        case "$2" in
+            sync)
+                case "$3" in
+                    '')
+                        nix shell
+                        rm -rf .direnv
+                        pushd ..
+                        popd;;
+                    *)
+                        pushd "$3" || exit
+                        che dev sync;;
+                esac;;
+            ''|help)
+                printf "$dev_help";;
+            *)
+                not_found "$2";;
+        esac;;
+    sync)
+        pushd ~/.dotfiles
+        nix flake lock --update-input secrets
+        git add .
+        nixos-rebuild switch --verbose --use-remote-sudo --flake .#
+        popd;;
+    update)
+        case "$2" in
+            flake)
+                nix flake update ~/.dotfiles;;
+            nix)
+                pushd ~/.dotfiles
+                git add .
+                nix flake update
+                nixos-rebuild switch --verbose --use-remote-sudo --flake .#
+                popd;;
+            emacs)
+                doom -! upgrade;;
+            all)
+                che update nix
+                che update emacs;;
+            ''|help)
+                printf "$update_help";;
+            *)
+                not_found "$2";;
+        esac;;
+    gc)
+        case "$2" in
+            all)
+                sudo nix-collect-garbage -d;;
+            ''|help)
+                printf "$gc_help";;
+            *)
+                sudo nix-collect-garbage --delete-older-than "$2";;
+        esac;;
+    theme)
+        case "$2" in
+            toggle)
+                if theme_is_dark; then
+                     che theme light
+                else che theme dark
+                fi;;
+            light)
+                fehbg theme
+                xsettingsd -c ~/.xsettingsd-light.conf &
+                emacsclient -e "(sync-theme-light)" &> /dev/null
+                kitty +kitten themes --reload-in=all --config-file-name ~/.config/kitty/mytheme.conf Mylight
+                ~/.config/bspwm/light;;
+            dark)
+                fehbg theme
+                xsettingsd -c ~/.xsettingsd-dark.conf &
+                emacsclient -e "(sync-theme-dark)" &> /dev/null
+                kitty +kitten themes --reload-in=all --config-file-name ~/.config/kitty/mytheme.conf Mydark
+                ~/.config/bspwm/dark;;
+            *)
+                printf "$theme_help";;
+        esac;;
+    ''|help)
+        printf "$help";;
+    *)
+        not_found "$@";;
+esac

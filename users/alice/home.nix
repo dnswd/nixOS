@@ -21,9 +21,6 @@
 
   # Packages
   home.packages = [
-    pkgs.alacritty
-    pkgs.git
-    pkgs.git-crypt
     pkgs.gnupg
     pkgs.pinentry_qt
   ];
@@ -33,13 +30,5 @@
   services.gpg-agent = {
     enable = true;
     pinentryFlavor = "qt";
-  };
-
-  # Configs
-  home.file = {
-    ".config/alacritty/alacritty.yaml".text = ''
-    env:
-      TERM: xterm-256color
-    '';
   };
 }

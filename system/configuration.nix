@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   imports =
@@ -14,10 +14,10 @@
   nix = {
     trustedUsers = [ "root" "halcyon" ];
     # Enable Flakes
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = [ "nix-command" "flakes" ];
   };
-
-  # Nixpkgs Configuration
+  
+  # Nixpkgs allow unfree
   nixpkgs.config.allowUnfree = true;
 
   # Bootloader.
@@ -59,10 +59,43 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
+
+#  services.xserver = {
+#    enable = true;
+#    #windowManager.bspwm = { enable = true; };
+#    displayManager = {
+#     sessionCommands = ''
+#       ${pkgs.bspwm}/bin/bspc wm -r
+#       source $HOME/.config/bspwm/bspwmrc
+#     '';
+#     lightdm = {
+#       enable = true;
+#       greeter.enable = true;
+#     };
+#     autoLogin = {
+#       enable = true;
+#       user = username;
+#     };
+#     # Defer to home-manager configuration
+#     defaultSession = "defer";
+#     session = [
+#       {
+#         name = "defer";
+#         manage = "desktop";
+#         start = "exec $HOME/.xsession";
+#       }
+#     ];
+#    };
+#  };
+
+#  services = {
+#    gnome.at-spi2-core.enable = true;
+#    gnome.gnome-keyring.enable = true;
+#  };
+    
 
   # Configure keymap in X11
   services.xserver = {
@@ -93,13 +126,36 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # Fonts
+  fonts = {
+    fonts = with pkgs; [
+      fira-code
+      twitter-color-emoji
+      my.apple-nerd-fonts
+    ];
+    fontconfig = {
+      defaultFonts = {
+        emoji = [ "Twitter Color Emoji" ];
+        monospace = [ "LigaSF Mono Nerd Font" "FiraCode" ];
+        serif = [
+          "New York Small"
+          "New York Medium"
+          "New York Large"
+          "New York Extra Large"
+        ];
+        sansSerif = [ "SF Pro Text" "SF Pro Display" ];
+      };
+    };
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.halcyon = {
+  users.users.${username} = {
     isNormalUser = true;
     description = "halcyon";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    shell = pkgs.zsh;
+    extraGroups = [ "networkmanager" "wheel" "docker" "audio" ];
   };
+  users.defaultUserShell = pkgs.zsh;
+  environment.pathsToLink = [ "/share/zsh" ];
 
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
@@ -107,63 +163,15 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = [
-    # College
-    pkgs.octaveFull
-
-    # Productivity
-    pkgs.slack
-    pkgs.tdesktop # telegram
-    pkgs.zoom-us
-    pkgs.libreoffice
-    pkgs.xournalpp
-    pkgs.obsidian
-    pkgs.firefox
-
-    # Development
-    pkgs.niv # nix helper to adding and updating dependencies
-    
-    ## Editor
-    pkgs.neovim
-    pkgs.sublime4
-    pkgs.vscode-fhs
-    pkgs.jetbrains.idea-ultimate
-    
-    ## Tools
-    pkgs.git
-
-    ## Java
-    pkgs.gradle
-
-    # Testing
-    pkgs.postman
-
-    # OS Utilities
-    pkgs.bind # installs dnsutils dev host lib man out
-    pkgs.busybox # another sysadmin stuff
-    pkgs.wget
-    pkgs.kitty
-    pkgs.zsh
-    pkgs.fzf
-    pkgs.zip
-
+  environment.systemPackages = with pkgs; [
+    busybox
+    bind
+    firefox
+    #bspwm
   ];
 
-  # Programs
-  # Setup JAVA_HOME system wide
-  programs.java.enable = true;
-  programs.java.package = pkgs.jdk8;
-
-  # Enable KDE Connect
-  programs.kdeconnect.enable = true;
-
-  # Services
-  # Enable HUION tablet support
-  services.xserver.digimend.enable = true;
-
-  # VirtualBox
-  virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ "halcyon" "root" ];
+  # Enable dconf for GTK
+  programs.dconf.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
