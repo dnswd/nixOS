@@ -6,18 +6,26 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [ 
       ./hardware-configuration.nix
     ];
 
-  # Enable Flakes by default
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Nix Configuration
+  nix = {
+    trustedUsers = [ "root" "halcyon" ];
+    # Enable Flakes
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  };
 
-  # Use the systemd-boot EFI boot loader.
+  # Nixpkgs Configuration
+  nixpkgs.config.allowUnfree = true;
+
+  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "msi"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
@@ -30,7 +38,18 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "en_US.utf8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "id_ID.utf8";
+    LC_IDENTIFICATION = "id_ID.utf8";
+    LC_MEASUREMENT = "id_ID.utf8";
+    LC_MONETARY = "id_ID.utf8";
+    LC_NAME = "id_ID.utf8";
+    LC_NUMERIC = "id_ID.utf8";
+    LC_PAPER = "id_ID.utf8";
+    LC_TELEPHONE = "id_ID.utf8";
+    LC_TIME = "id_ID.utf8";
+  };
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
@@ -44,39 +63,107 @@
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
-  
 
   # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = {
-  #   "eurosign:e";
-  #   "caps:escape" # map caps to escape.
-  # };
+  services.xserver = {
+    layout = "us";
+    xkbVariant = "";
+  };
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
 
-  # Enable sound.
+  # Enable sound with pipewire.
   sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.alice = {
+  users.users.halcyon = {
     isNormalUser = true;
-    initialPassword = "password";
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    description = "halcyon";
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    shell = pkgs.zsh;
   };
+
+  # Enable automatic login for the user.
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "halcyon";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    firefox
+  environment.systemPackages = [
+    # College
+    pkgs.octaveFull
+
+    # Productivity
+    pkgs.slack
+    pkgs.tdesktop # telegram
+    pkgs.zoom-us
+    pkgs.libreoffice
+    pkgs.xournalpp
+    pkgs.obsidian
+    pkgs.firefox
+
+    # Development
+    pkgs.niv # nix helper to adding and updating dependencies
+    
+    ## Editor
+    pkgs.neovim
+    pkgs.sublime4
+    pkgs.vscode-fhs
+    pkgs.jetbrains.idea-ultimate
+    
+    ## Tools
+    pkgs.git
+
+    ## Java
+    pkgs.gradle
+
+    # Testing
+    pkgs.postman
+
+    # OS Utilities
+    pkgs.bind # installs dnsutils dev host lib man out
+    pkgs.busybox # another sysadmin stuff
+    pkgs.wget
+    pkgs.kitty
+    pkgs.zsh
+    pkgs.fzf
+    pkgs.zip
+
   ];
+
+  # Programs
+  # Setup JAVA_HOME system wide
+  programs.java.enable = true;
+  programs.java.package = pkgs.jdk8;
+
+  # Enable KDE Connect
+  programs.kdeconnect.enable = true;
+
+  # Services
+  # Enable HUION tablet support
+  services.xserver.digimend.enable = true;
+
+  # VirtualBox
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "halcyon" "root" ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -108,7 +195,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
-
+  system.stateVersion = "22.05"; # Did you read the comment?
 }
+
 

@@ -14,11 +14,6 @@
       inherit system;
       config = { allowUnfree = true; };
     };
-    lib = nixpkgs.lib;
-
-    extraSpecialArgs = {
-      inherit pkgs system lib;
-    };
 
   in {
     nixosConfigurations = {
