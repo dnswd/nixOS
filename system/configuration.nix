@@ -41,33 +41,44 @@
   # };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the Plasma 5 Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
 
-#  services.xserver = {
-#    enable = true;
-#    displayManager = {
-#      sddm.enable = true;
-#      autoLogin.enable = true;
-#      autoLogin.user = username;
-#      defaultSession = "none+fake";
-#      session = [
-#         {
-#           name = "fake";
-#           manage = "window";
-#           start = "";
-#         }
-#      ];
-#    };
-#  };
+ services.xserver = {
+   enable = true;
+   #windowManager.bspwm = { enable = true; };
+   displayManager = {
+    sessionCommands = ''
+      ${pkgs.bspwm}/bin/bspc wm -r
+      source $HOME/.config/bspwm/bspwmrc
+    '';
+    lightdm = {
+      enable = true;
+      greeter.enable = true;
+    };
+    autoLogin = {
+      enable = true;
+      user = username;
+    };
+    # Defer to home-manager configuration
+    defaultSession = "defer";
+    session = [
+      {
+        name = "defer";
+        manage = "desktop";
+        start = "exec $HOME/.xsession";
+      }
+    ];
+   };
+ };
 
-#  services = {
-#    gnome.at-spi2-core.enable = true;
-#    gnome.gnome-keyring.enable = true;
-#  };
+ services = {
+   gnome.at-spi2-core.enable = true;
+   gnome.gnome-keyring.enable = true;
+ };
     
 
   # Configure keymap in X11
@@ -120,11 +131,12 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  # environment.systemPackages = with pkgs; [
-  #   busybox
-  #   bind
-  #   firefox
-  # ];
+  environment.systemPackages = with pkgs; [
+    busybox
+    bind
+    firefox
+    #bspwm
+  ];
 
   # Enable dconf for GTK
   programs.dconf.enable = true;

@@ -46,7 +46,7 @@ in {
       "origin.exe".state = "floating";
       "explorer.exe".hidden = true;
     };
-    monitors = { HDMI-0 = map toString (lib.lists.range 1 desks'); };
+    monitors = { Virtual1 = map toString (lib.lists.range 1 desks'); };
     extraConfig = ''
       bspc desktop -l monocle
 

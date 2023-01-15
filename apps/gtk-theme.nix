@@ -18,6 +18,12 @@
       package = pkgs.capitaine-cursors;
       size = 30;
     };
+    gtk3.extraConfig = {
+      gtk-xft-antialias = 1;
+    };
+    gtk2.extraConfig = ''
+      gtk-xft-antialias=1
+    '';
   };
   home.packages = with pkgs; [ xsettingsd ];
   home.file.".xsettingsd-light.conf".text = ''
