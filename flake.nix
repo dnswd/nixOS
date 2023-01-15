@@ -24,8 +24,8 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs: 
   let
     system = "x86_64-linux";
-    username = "alice";
-    hostname = "nixos";
+    username = "halcyon";
+    hostname = "msi";
 
     mkPkgs = o:
       import nixpkgs ({
@@ -62,13 +62,11 @@
       (extraSpecialArgs // { inherit lib; });
 
   in rec {
-    homeManagerConfigurations = {
-      alice = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./users/alice/home.nix
-        ];
-      };
+    homeManagerConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [
+        ./users/${username}/home.nix
+      ];
     };
 
     nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
@@ -82,7 +80,7 @@
             useUserPackages = true;
             users.${username} = {
               imports = [ 
-                (import ./users/alice/home.nix)
+                (import ./users/${username}/home.nix)
                 (import ./apps/xinit.nix) 
                 (import ./apps/xdg.nix) 
                 (import ./apps/git.nix)
@@ -100,6 +98,7 @@
                 (import ./apps/path.nix) 
                 # (import ./apps/notification.nix) 
                 # (import ./apps/file-manager.nix) 
+                (import ./apps/vscode.nix)
               ];
             };
           };

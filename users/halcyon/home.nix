@@ -1,10 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "halcyon";
-  home.homeDirectory = "/home/halcyon";
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -32,13 +32,5 @@
   services.gpg-agent = {
     enable = true;
     pinentryFlavor = "qt";
-  };
-
-  # Configs
-  home.file = {
-    ".config/alacritty/alacritty.yaml".text = ''
-    env:
-      TERM: xterm-256color
-    '';
   };
 }

@@ -1,6 +1,6 @@
 #!/bin/sh
 pushd ~/.dotfiles
-nix build .#homeManagerConfigurations.alice.activationPackage
+nix build .#homeManagerConfigurations.halcyon.activationPackage
 ./result/activate
 popd
 

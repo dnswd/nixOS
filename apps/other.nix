@@ -7,7 +7,6 @@
     bind
 
     # dev
-    pkgs.vscode-fhs
     pkgs.git
     pkgs.git-crypt
 

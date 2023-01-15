@@ -12,9 +12,10 @@
 
   # Nix Configuration
   nix = {
-    trustedUsers = [ "root" "halcyon" ];
-    # Enable Flakes
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings = {
+      trusted-users = [ "root" "halcyon" ];
+      experimental-features = [ "nix-command" "flakes" ];
+    };
   };
   
   # Nixpkgs allow unfree
@@ -124,7 +125,12 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput = {
+    enable = true;
+    touchpad = {
+      naturalScrolling = true;
+    };
+  };
 
   # Fonts
   fonts = {
