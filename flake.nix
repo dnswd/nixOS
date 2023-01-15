@@ -98,6 +98,8 @@
                 (import ./apps/bspwm.nix) 
                 (import ./apps/picom.nix) 
                 (import ./apps/path.nix) 
+                (import ./apps/notification.nix) 
+                (import ./apps/file-manager.nix) 
               ];
             };
           };
