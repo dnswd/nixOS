@@ -76,6 +76,7 @@
         home-manager.nixosModules.home-manager {
           home-manager = {
             inherit extraSpecialArgs;
+            backupFileExtension = "backup";
             useGlobalPkgs = true;
             useUserPackages = true;
             users.${username} = {
@@ -89,7 +90,7 @@
                 # (import ./apps/eww)
                 (import ./apps/rofi)
                 (import ./apps/variable.nix) 
-                # (import ./apps/nvim.nix) 
+                (import ./apps/nvim) 
                 (import ./apps/direnv.nix)
                 (import ./apps/gtk-theme.nix) 
                 (import ./apps/other.nix) 
@@ -99,6 +100,7 @@
                 # (import ./apps/notification.nix) 
                 # (import ./apps/file-manager.nix) 
                 (import ./apps/vscode.nix)
+                (import ./apps/java.nix)
               ];
             };
           };

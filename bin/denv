@@ -1,0 +1,42 @@
+#!/bin/sh
+#  ____              
+# |    \ ___ ___ _ _ 
+# |  |  | -_|   | | |
+# |____/|___|_|_|\_/ 
+#
+# Nix development environment helper
+
+export DENV_REPO="github:dnswd/dev-templates"
+FILE=".envrc"
+
+case "$1" in
+  init|i)
+    echo "Initializing $2 flake from $DENV_REPO"
+    nix flake init -t "$DENV_REPO#$2"
+    direnv allow
+    ;;
+  env|e)
+    echo "Loading following env(s) from $DENV_REPO"
+    if [ -f "$FILE" ]; then
+        while true; do
+            read -p "$FILE already exists. Override?" yn
+            case $yn in    
+                [Yy]* ) echo "" > "$FILE";;
+                [Nn]* ) echo "Writing on top existing $FILE";;
+                * )     echo "Please answer yes or no.";;
+            esac
+        done
+    fi
+
+    envs="$@"
+    shift envs
+    shift envs
+
+    for env in envs; do
+      echo "use flake \"$DENV_REPO?dir=$env\"" >> .envrc
+    done
+    direnv allow
+esac
+
+    
+

@@ -169,12 +169,12 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    busybox
-    bind
-    firefox
-    #bspwm
-  ];
+  # environment.systemPackages = with pkgs; [
+  #   busybox
+  #   bind
+  #   firefox
+  #   #bspwm
+  # ];
 
   # Enable dconf for GTK
   programs.dconf.enable = true;

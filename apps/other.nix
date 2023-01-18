@@ -7,8 +7,14 @@
     bind
 
     # dev
-    pkgs.git
-    pkgs.git-crypt
+    git
+    git-crypt
+
+    # work
+    slack
+    obsidian
+    jetbrains.idea-ultimate
+    postman
 
     # browser
     firefox
