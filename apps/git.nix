@@ -5,11 +5,11 @@
     userEmail = "dennis.walangadi@gmail.com";
     aliases = {
       recent-branches = "!git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'";
-      
+
       # commit
-      c = "commit -m"; # commit with message
+      c = "commit"; # commit
+      cm = "commit -m"; # commit with message
       ca = "commit -am"; # commit all with message
-      ci = "commit"; # commit
       amend = "commit --amend"; # ammend your last commit
       append = "commit --amend --no-edit"; # append changes into your last commit
 

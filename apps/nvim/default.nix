@@ -23,6 +23,7 @@ let
   };
   vimPlugins = with pkgs.vimPlugins; [
     telescope-nvim
+    easygrep
   ];
 in
 {
@@ -36,13 +37,5 @@ in
       lua require("init")
     '';
     plugins = [myConfig] ++ vimPlugins;
-    # packages.myPlugins = with pkgs.vimPlugins; {
-    #     start = [
-    #       # vim-go # already packaged plugin
-    #       easygrep # custom package not packaged in nixpkgs
-    #       myConfig # my own configuration
-    #     ];
-    #     opt = [];
-    # };
   };
 }
