@@ -82,6 +82,7 @@
             users.${username} = {
               imports = [ 
                 (import ./users/${username}/home.nix)
+                (import ./hm-modules/qtile.nix)
                 (import ./apps/xinit.nix) 
                 (import ./apps/xdg.nix) 
                 (import ./apps/git.nix)
@@ -101,6 +102,7 @@
                 # (import ./apps/file-manager.nix) 
                 (import ./apps/vscode.nix)
                 (import ./apps/java.nix)
+                (import ./apps/qtile.nix)
               ];
             };
           };

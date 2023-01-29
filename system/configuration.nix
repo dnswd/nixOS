@@ -57,40 +57,38 @@
   #   useXkbConfig = true; # use xkbOptions in tty.
   # };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # # Enable the X11 windowing system.
+  # services.xserver.enable = true;
 
-  # Enable the Plasma 5 Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
+  # # Enable the Plasma 5 Desktop Environment.
+  # services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
 
-#  services.xserver = {
-#    enable = true;
-#    #windowManager.bspwm = { enable = true; };
-#    displayManager = {
-#     sessionCommands = ''
-#       ${pkgs.bspwm}/bin/bspc wm -r
-#       source $HOME/.config/bspwm/bspwmrc
-#     '';
-#     lightdm = {
-#       enable = true;
-#       greeter.enable = true;
-#     };
-#     autoLogin = {
-#       enable = true;
-#       user = username;
-#     };
-#     # Defer to home-manager configuration
-#     defaultSession = "defer";
-#     session = [
-#       {
-#         name = "defer";
-#         manage = "desktop";
-#         start = "exec $HOME/.xsession";
-#       }
-#     ];
-#    };
-#  };
+  services.xserver = {
+    enable = true;
+    #windowManager.bspwm = { enable = true; };
+    displayManager = {
+     sessionCommands = ''
+       ${pkgs.qtile}/bin/qtile start
+     '';
+     sddm = {
+       enable = true;
+     };
+    #  autoLogin = {
+    #    enable = true;
+    #    user = username;
+    #  };
+     # Defer to home-manager configuration
+     defaultSession = "defer";
+     session = [
+       {
+         name = "defer";
+         manage = "desktop";
+         start = "exec $HOME/.xsession";
+       }
+     ];
+    };
+  };
 
 #  services = {
 #    gnome.at-spi2-core.enable = true;
