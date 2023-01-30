@@ -141,7 +141,7 @@ in {
   config = mkIf cfg.enable {
     xsession = {
       windowManager.command = ''
-        "${cfg.package}/bin/qtile"
+        "${cfg.package}/bin/qtile" start
       '';
     };
 
@@ -179,7 +179,11 @@ in {
         from libqtile.lazy import lazy
         from libqtile.utils import guess_terminal
 
-        # user config
+        ########################################
+        # This file is managed by Home Manager #
+        ########################################
+
+        # User config
         ${cfg.extraConfig}
 
         mod = "${cfg.mod}"
@@ -189,7 +193,7 @@ in {
           concatStringsSep ", " (map (g: ''Group("${g}")'') cfg.groups)
         }]
 
-        # keybindings
+        # Keybindings
         keys = [
             # keybindings
             ${parseKeybindings cfg.keybindings 1},
@@ -197,7 +201,7 @@ in {
             ${parseKeybindings (generateGroupKeybindings cfg.groups) 1}
         ]
 
-        # layouts
+        # Layouts
         layouts = [
             ${
               concatStringsSep (''
@@ -206,10 +210,10 @@ in {
             }
         ]
 
-        # statusbar
+        # Statusbar
         ${if cfg.bar.enable then cfg.bar.config else ""}
 
-        # screens
+        # Screens
         screens = [
             ${
               concatStringsSep (''

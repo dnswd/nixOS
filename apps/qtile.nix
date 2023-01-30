@@ -13,15 +13,23 @@
     windowManager.qtile = {
       enable = true;
       keybindings = {
+
+        # Basic
         "mod + mod1 + r" = "lazy.restart()";
         "mod + h" = "lazy.layout.left()";
         "mod + j" = "lazy.layout.down()";
         "mod + k" = "lazy.layout.up()";
         "mod + l" = "lazy.layout.right()";
+        "mod + Return" = "lazy.spawn(terminal)";
+        "mod + w" = "lazy.window.kill()"; # Kill focused window
+
+        # Layout
         "mod + shift + h" = "lazy.layout.swap_left()";
         "mod + shift + j" = "lazy.layout.shuffle_down()";
         "mod + shift + k" = "lazy.layout.shuffle_up()";
         "mod + shift + l" = "lazy.layout.swap_right()";
+
+        # Custom function (declared in extraConfig)
         "mod + control + h" = "lazy.function(shrink_master)";
         "mod + control + j" = "lazy.function(shrink_window)";
         "mod + control + k" = "lazy.function(grow_window)";

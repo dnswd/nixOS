@@ -66,23 +66,16 @@
 
   services.xserver = {
     enable = true;
-    #windowManager.bspwm = { enable = true; };
     displayManager = {
-     sessionCommands = ''
-       ${pkgs.qtile}/bin/qtile start
-     '';
      sddm = {
        enable = true;
      };
-    #  autoLogin = {
-    #    enable = true;
-    #    user = username;
-    #  };
+
      # Defer to home-manager configuration
-     defaultSession = "defer";
+     defaultSession = "home-manager";
      session = [
        {
-         name = "defer";
+         name = "home-manager";
          manage = "desktop";
          start = "exec $HOME/.xsession";
        }
