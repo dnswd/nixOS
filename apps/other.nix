@@ -15,6 +15,7 @@
     obsidian
     jetbrains.idea-ultimate
     postman
+    dbeaver
 
     # browser
     firefox

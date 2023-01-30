@@ -141,7 +141,8 @@ in {
   config = mkIf cfg.enable {
     xsession = {
       windowManager.command = ''
-        "${cfg.package}/bin/qtile"
+        "${cfg.package}/bin/qtile" start -b wayland &
+        waitPID=$!
       '';
     };
 

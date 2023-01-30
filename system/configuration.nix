@@ -8,6 +8,7 @@
   imports =
     [ 
       ./hardware-configuration.nix
+      # ../pkgs/qtile.nix
     ];
 
   # Nix Configuration
@@ -51,49 +52,31 @@
     LC_TELEPHONE = "id_ID.utf8";
     LC_TIME = "id_ID.utf8";
   };
+  
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkbOptions in tty.
   # };
 
-  # # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
-  # # Enable the Plasma 5 Desktop Environment.
-  # services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-
   services.xserver = {
     enable = true;
-    #windowManager.bspwm = { enable = true; };
+    desktopManager.plasma5.enable = true;
+    windowManager.qtile = { 
+      enable = true;
+      backend = "x11";
+    };
     displayManager = {
-     sessionCommands = ''
-       ${pkgs.qtile}/bin/qtile start
-     '';
      sddm = {
        enable = true;
      };
-    #  autoLogin = {
-    #    enable = true;
-    #    user = username;
-    #  };
-     # Defer to home-manager configuration
-     defaultSession = "defer";
-     session = [
-       {
-         name = "defer";
-         manage = "desktop";
-         start = "exec $HOME/.xsession";
-       }
-     ];
     };
   };
 
-#  services = {
-#    gnome.at-spi2-core.enable = true;
-#    gnome.gnome-keyring.enable = true;
-#  };
+  # services = {
+  #   gnome.at-spi2-core.enable = true;
+  #   gnome.gnome-keyring.enable = true;
+  # };
     
 
   # Configure keymap in X11

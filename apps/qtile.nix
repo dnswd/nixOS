@@ -4,14 +4,11 @@
   # Qtile custom module are sourced from:
   # https://github.com/addy419/configurations/blob/1d3a91dc6645c7785f432b41b862e46beccbb1db/modules/desktop/qtile.nix
 
-  home.packages = with pkgs; [
-    qtile
-  ];
-
-  xsession = {
+  services.xserver = {
     enable = true;
     windowManager.qtile = {
       enable = true;
+      terminal= "kitty";
       keybindings = {
         "mod + mod1 + r" = "lazy.restart()";
         "mod + h" = "lazy.layout.left()";
