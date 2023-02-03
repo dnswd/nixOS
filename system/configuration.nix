@@ -25,6 +25,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  
+  # Keychron function keys
+  # tells modprobe to pass fnmode=0 by default when loading the hid_apple kernel module
+  # https://mikeshade.com/posts/keychron-linux-function-keys/
+  boot.extraModprobeConfig = ''
+    options hid_apple fnmode=0
+  '';
 
   networking.hostName = "msi"; # Define your hostname.
   # Pick only one of the below networking options.
