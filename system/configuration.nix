@@ -70,6 +70,16 @@
      sddm = {
        enable = true;
      };
+
+     # Defer to home-manager configuration
+     defaultSession = "home-manager";
+     session = [
+       {
+         name = "home-manager";
+         manage = "desktop";
+         start = "exec $HOME/.xsession";
+       }
+     ];
     };
   };
 

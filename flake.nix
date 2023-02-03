@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-22.11";
+    nixpkgsUnstable.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-22.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -21,7 +22,7 @@
 
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: 
+  outputs = { self, nixpkgs, nixpkgsUnstable, home-manager, ... }@inputs: 
   let
     system = "x86_64-linux";
     username = "halcyon";
@@ -29,6 +30,12 @@
 
     mkPkgs = o:
       import nixpkgs ({
+        config.allowUnfree = true;
+        localSystem = { inherit system; };
+      } // o);
+
+    mkUnstablePkgs = o:
+      import nixpkgsUnstable ({
         config.allowUnfree = true;
         localSystem = { inherit system; };
       } // o);
@@ -48,7 +55,7 @@
               inherit inputs;
               inherit (lib) my;
             });
-          unstable = mkPkgs { };
+          unstable = mkUnstablePkgs { };
         })
       ];
     };
@@ -82,7 +89,6 @@
             users.${username} = {
               imports = [ 
                 (import ./users/${username}/home.nix)
-                # (import ./hm-modules/qtile.nix)
                 (import ./apps/xinit.nix) 
                 (import ./apps/xdg.nix) 
                 (import ./apps/git.nix)
