@@ -73,8 +73,7 @@ in {
   config = mkIf cfg.enable {
     xsession = {
       windowManager.command = ''
-        ${cfg.package}/bin/qtile start &
-        waitPID=$!
+        ${cfg.package}/bin/qtile start
       '';
     };
 
