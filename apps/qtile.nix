@@ -13,6 +13,9 @@
       package = pkgs.unstable.qtile;
       terminal = "kitty";
       keybindings = {
+        "mod + p" = ''lazy.spawn("rofi -show drun")'';
+        "mod + b" = ''lazy.function(hide_show_bar)'';
+
         "mod + Return" = "lazy.spawn(terminal)";
         "mod + mod1 + r" = "lazy.reload_config()";
         "mod + 0" = {
@@ -23,6 +26,7 @@
             "r" = ''lazy.spawn("shutdown now -r")'';
           };
         };
+
         "mod + h" = "lazy.layout.left()";
         "mod + j" = "lazy.layout.down()";
         "mod + k" = "lazy.layout.up()";
@@ -35,9 +39,10 @@
         "mod + control + j" = "lazy.function(shrink_window)";
         "mod + control + k" = "lazy.function(grow_window)";
         "mod + control + l" = "lazy.function(grow_master)";
+        
         "mod + q" = "lazy.window.kill()";
-        "mod1 + m" = "lazy.window.toggle_maximize()";
-        "mod1 + f" = "lazy.window.toggle_fullscreen()";
+        "mod1 + F10" = "lazy.window.toggle_maximize()";
+        "mod1 + f11" = "lazy.window.toggle_fullscreen()";
         "mod + shift + space" = "lazy.window.toggle_floating()";
       };
       extraConfig = ''
@@ -85,10 +90,6 @@
         widget_defaults = dict(font="JetBrains Mono Nerd Font",fontsize=12)
         extension_defaults = widget_defaults.copy()
 
-        wallpaper = ""
-        wallpaper_color = "#ecbfbd"
-        wallpaper_color_alt = "#282a36"
-
         status_notifier = widget.StatusNotifier(
             icon_theme="papirus-icon-theme",
             icon_size=16
@@ -99,41 +100,36 @@
             )
 
         def screen(index):
-            barheight = 32
-            borderwidth = 3
-            
-            # groupbox
-            fontsize = 14
-            padding = 10
-            groupbox = widget.GroupBox(
-                fontsize=fontsize,
-                highlight_method="block",
-                borderwidth=borderwidth,
-                font="Font Awesome 6 Free Solid",
-                active="#f8f8f2",
-                inactive="#44475a",
-                block_highlight_text_color=wallpaper_color_alt,
-                this_current_screen_border=wallpaper_color,
-                this_screen_border=wallpaper_color,
-                margin=0,
-                padding_y=barheight-fontsize-2*borderwidth,
-                padding_x=padding,
-                rounded=False
-                )
+            # barheight = 32
+            # borderwidth = 3
+            # 
+            # # groupbox
+            # fontsize = 14
+            # padding = 10
+            # groupbox = widget.GroupBox(
+            #     fontsize=fontsize,
+            #     highlight_method="block",
+            #     borderwidth=borderwidth,
+            #     font="Font Awesome 6 Free Solid",
+            #     active="#f8f8f2",
+            #     inactive="#44475a",
+            #     margin=0,
+            #     padding_y=barheight-fontsize-2*borderwidth,
+            #     padding_x=padding,
+            #     rounded=False
+            #     )
 
-            widgets = [
-                groupbox,
-                chord,
-                widget.Spacer(),
-                #status_notifier
-                #widget.Systray()
-                status_notifier
-                ]
+            # widgets = [
+            #     groupbox,
+            #     chord,
+            #     widget.Spacer(),
+            #     #status_notifier
+            #     #widget.Systray()
+            #     status_notifier
+            #     ]
 
             return Screen(
-                bottom=bar.Bar(widgets,barheight,background="#282a36"),
-                wallpaper=wallpaper,
-                wallpaper_mode="fill"
+                top=bar.Gap(0),
                 )
 
         maxScreens = 1
@@ -159,11 +155,27 @@
             if monad_stack_size(qtile) > 1:
                 qtile.current_layout.cmd_shrink()
 
+        def hide_show_bar(qtile):
+            """Toggle the eww bar."""
+            # script = os.path.expanduser('~/.config/qtile/scripts/toggleBar.sh')
+            # subprocess.call([script])
+            gap = qtile.screens[0].top
+            if gap.size == 0:
+                gap.size = 32
+            else:
+                gap.size = 0
+
         @hook.subscribe.client_killed
         def on_client_kill(window):
             qtile = window.qtile
             if monad_stack_size(qtile) <= 1:
                 qtile.current_layout.cmd_set_ratio(0.5)
+
+        @hook.subscribe.startup
+        def on_client_start():
+            pass
+            # home=os.path.expanduser('~/.config/qtile/scripts/autostart.sh')
+            # subprocess.call([home])
       '';
     };
   };

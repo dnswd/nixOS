@@ -1,5 +1,10 @@
-{ config, lib, pkgs, ... }: {
-  home.packages = with pkgs; [ eww ];
+{ config, lib, pkgs, ... }:{
+  
+  programs.eww = {
+    enable = true;
+    package = pkgs.eww;
+  };
+  
   xdg.configFile."eww/eww.yuck".source = ./eww.yuck;
   xdg.configFile."eww/eww.css".source = ./eww.css;
 
