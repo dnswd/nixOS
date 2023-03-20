@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     # sysadmin stuff
-    busybox
+    unstable.busybox
     bind
 
     # dev
@@ -16,6 +16,7 @@
     jetbrains.idea-ultimate
     postman
     dbeaver
+    zoom-us
 
     # browser
     firefox

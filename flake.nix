@@ -92,6 +92,7 @@
                 (import ./apps/xinit.nix) 
                 (import ./apps/xdg.nix) 
                 (import ./apps/git.nix)
+                (import ./apps/tmux.nix)
                 (import ./apps/kitty.nix) 
                 (import ./apps/zsh)
                 # (import ./apps/eww)
@@ -108,7 +109,7 @@
                 # (import ./apps/file-manager.nix) 
                 (import ./apps/vscode.nix)
                 (import ./apps/java.nix)
-                (import ./apps/qtile.nix)
+                # (import ./apps/qtile.nix)
               ];
             };
           };

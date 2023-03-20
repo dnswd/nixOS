@@ -1,4 +1,9 @@
 { config, pkgs, lib, ... }: {
+
+  imports = [
+    ./starship.nix
+  ];
+
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -7,22 +12,35 @@
     autocd = true;
     defaultKeymap = "viins";
     dotDir = ".config/zsh";
+    initExtraFirst = builtins.readFile ./initExtraFirst.zsh;
+    initExtra = builtins.readFile ./initExtra.zsh;
+
     history = {
       ignoreDups = true;
       ignoreSpace = true;
       path = "$ZDOTDIR/.history";
       share = true;
     };
-    initExtraFirst = builtins.readFile ./initExtraFirst.zsh;
-    initExtra = builtins.readFile ./initExtra.zsh;
+
     shellAliases = {
       # cat = "bat";
-    #   e = ''devour emacsclient -c -a \"\"'';
-    #   qrclip = "xclip -o | qrencode -t utf8";
+      # e = ''devour emacsclient -c -a \"\"'';
+      # qrclip = "xclip -o | qrencode -t utf8";
       clear = ''printf "\033[2J\033[3J\033[1;1H"'';
-    #   lutris = "WEBKIT_DISABLE_COMPOSITING_MODE=1 lutris";
-    #   neofetch = "fix_neofetch";
+      # lutris = "WEBKIT_DISABLE_COMPOSITING_MODE=1 lutris";
+      # neofetch = "fix_neofetch";
     };
+    
+    zplug = {
+      enable = true;
+      plugins = [
+        { name = "plugins/tmux"; tags = [ from:oh-my-zsh ]; }
+        { name = "plugins/history"; tags = [ from:oh-my-zsh ]; }
+        { name = "plugins/history-substring-search"; tags = [ from:oh-my-zsh ]; }
+        { name = "plugins/colored-man-pages"; tags = [ from:oh-my-zsh ]; }
+      ];
+    };
+
     plugins = [
       {
         name = "zsh-syntax-highlighting";

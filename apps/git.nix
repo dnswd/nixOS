@@ -4,8 +4,6 @@
     userName = "Dennis Al Baihaqi Walangadi";
     userEmail = "dennis.walangadi@gmail.com";
     aliases = {
-      recent-branches = "!git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'";
-
       # commit
       c = "commit"; # commit
       cm = "commit -m"; # commit with message
@@ -14,6 +12,7 @@
       append = "commit --amend --no-edit"; # append changes into your last commit
 
       # branch
+      recent-branches = "!git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'";
       nb = "checkout -b";
       sw = "switch";
       pl = "pull";
@@ -41,11 +40,8 @@
       };
       diff.algorithm = "histogram";
     };
-    delta = {
+    diff-so-fancy = {
       enable = true;
-      options = {
-        line-numbers = true;
-      };
     };
   };
 }

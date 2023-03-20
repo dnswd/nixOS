@@ -73,14 +73,14 @@
      };
 
      # Defer to home-manager configuration
-     defaultSession = "home-manager";
-     session = [
-       {
-         name = "home-manager";
-         manage = "desktop";
-         start = "exec $HOME/.xsession";
-       }
-     ];
+    #  defaultSession = "home-manager";
+    #  session = [
+    #    {
+    #      name = "home-manager";
+    #      manage = "desktop";
+    #      start = "exec $HOME/.xsession";
+    #    }
+    #  ];
     };
   };
 
@@ -178,6 +178,9 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  # Enable docker
+  virtualisation.docker.enable = true;
 
   # List services that you want to enable:
 

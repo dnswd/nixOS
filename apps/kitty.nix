@@ -1,4 +1,5 @@
 { config, pkgs, lib, my, ... }: {
+  
   programs.kitty = {
     enable = true;
     font.name = "mono";
