@@ -68,11 +68,11 @@
     enable = true;
     desktopManager.plasma5.enable = true;
     displayManager = {
-     sddm = {
-       enable = true;
-     };
+      sddm = {
+        enable = true;
+      };
 
-     # Defer to home-manager configuration
+    # Defer to home-manager configuration
     #  defaultSession = "home-manager";
     #  session = [
     #    {
@@ -115,6 +115,9 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+
+  # Enable bluetooth support
+  hardware.bluetooth.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput = {
@@ -162,10 +165,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # environment.systemPackages = with pkgs; [
-  #   busybox
-  #   bind
-  #   firefox
-  #   #bspwm
+  #   xbomb
   # ];
 
   # Enable dconf for GTK

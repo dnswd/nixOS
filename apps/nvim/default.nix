@@ -11,6 +11,7 @@ let
       sha256 = "0y2p5mz0d5fhg6n68lhfhl8p4mlwkb82q337c22djs4w5zyzggbc";
     };
   };
+
   # Use customRC for simple config but if you want your configuration to be in multiple files, you
   # can just package them as a plugin as plugins respect the hierarchie of .config/nvim file
   # as presented for instance here.
@@ -19,8 +20,9 @@ let
     name = "my-config";
     # Create in this directory a file like my-neovim-config/lua/init.lua, to load as below in customRC using
     # lua require("init")
-    src = ./nvim-config;
+    src = ./nvim-lua;
   };
+  
   vimPlugins = with pkgs.vimPlugins; [
     telescope-nvim
     easygrep
@@ -31,6 +33,7 @@ in
     enable = true;
     viAlias = true;
     vimAlias = true;
+    defaultEditor = true;
     extraConfig = ''
       " your custom configuration (vim format). If you like to have multiple files or lua config,
       " you can create a plugin easily as shown above.
