@@ -109,6 +109,7 @@
                 # (import ./apps/file-manager.nix) 
                 (import ./apps/vscode.nix)
                 (import ./apps/java.nix)
+                (import ./apps/firefox.nix)
                 # (import ./apps/qtile.nix)
               ];
             };

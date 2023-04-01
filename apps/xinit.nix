@@ -25,6 +25,7 @@
       #eww open bar &
       #pcmanfm -d &
       #dunst &
+      obsidian &
     '';
   };
   home.pointerCursor = {

@@ -18,9 +18,6 @@
     dbeaver
     zoom-us
 
-    # browser
-    firefox
-
     # theming
     fontforge-gtk
 
