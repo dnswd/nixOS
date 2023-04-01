@@ -1,5 +1,5 @@
 local set = vim.opt
-local globalvar = vimg.g
+local globalvar = vim.g
 
 set.guicursor = ""
 

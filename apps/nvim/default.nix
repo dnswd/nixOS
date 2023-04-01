@@ -17,7 +17,7 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "utilyre";
       repo = "barbecue.nvim";
-      rev = "v1.0.0";
+      rev = "a0e19486ccc1fb134f6ef7bf914d07bbb462e346";
       hash = "sha256-oQwrCCgHt04Amyc/Uis6HtwjDQ3V+AhetJ/yEyY7yRU=";
     };
   };
@@ -41,21 +41,11 @@ let
       hash = "sha256-Yq68nxfapBbjZa4Gd6tRz8JNg8bWvCQjhzl1lCH+8bA=";
     };
   };
-
-  # Use customRC for simple config but if you want your configuration to be in multiple files, you
-  # can just package them as a plugin as plugins respect the hierarchie of .config/nvim file
-  # as presented for instance here.
-  # https://github.com/nanotee/nvim-lua-guide
-  myConfig = pkgs.vimUtils.buildVimPlugin {
-    name = "my-config";
-    # Create in this directory a file like my-neovim-config/lua/init.lua, to load as below in customRC using
-    # lua require("init")
-    src = ./nvim-lua;
-  };
   
   vimPlugin = with pkgs.vimPlugins; [
-      # plugins set up in nvim/
+      # plugins set up in nvim
       impatient-nvim
+
       # color.lua
       catppuccin-nvim
       lualine-nvim
@@ -82,6 +72,7 @@ let
       cmp-path
       lspkind-nvim
       nvim-cmp
+
       # Snippets
       luasnip
       cmp_luasnip
@@ -91,13 +82,21 @@ let
 
       # navigation
       smart-splits
-      barbecue
+      {
+        plugin = barbecue;
+        type = "lua";
+        config = "require('barbecue').setup({})";
+      }
 
       # plugins set up here
       {
         plugin = gitsigns-nvim;
         type = "lua";
-        config = "require('gitsigns').setup({sign_priority = 0})";
+        config = ''
+        require('gitsigns').setup({
+          sign_priority = 0
+          })
+        '';
       }
       {
         plugin = which-key-nvim;
@@ -180,6 +179,17 @@ let
       copilot-cmp
       winshift-nvim
   ];
+
+  # Use customRC for simple config but if you want your configuration to be in multiple files, you
+  # can just package them as a plugin as plugins respect the hierarchie of .config/nvim file
+  # as presented for instance here.
+  # https://github.com/nanotee/nvim-lua-guide
+  myConfig = pkgs.vimUtils.buildVimPlugin {
+    name = "my-config";
+    # Create in this directory a file like my-neovim-config/lua/init.lua, to load as below in customRC using
+    # lua require("init")
+    src = ./nvim-lua;
+  };
 in
 {
   programs.neovim = {
@@ -198,6 +208,7 @@ in
       rnix-lsp
       sumneko-lua-language-server
       tree-sitter
+      nodejs
     ];
     extraConfig = ''
       " your custom configuration (vim format). If you like to have multiple files or lua config,
