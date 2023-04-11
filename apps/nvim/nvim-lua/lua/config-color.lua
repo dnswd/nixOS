@@ -4,4 +4,4 @@ vim.cmd("colorscheme catppuccin")
 
 require("lualine").setup()
 
-require("barbecue").setup()
+-- require("barbecue").setup()

@@ -12,15 +12,15 @@ let
     };
   };
 
-  barbecue = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    name = "barbecue";
-    src = pkgs.fetchFromGitHub {
-      owner = "utilyre";
-      repo = "barbecue.nvim";
-      rev = "a0e19486ccc1fb134f6ef7bf914d07bbb462e346";
-      hash = "sha256-oQwrCCgHt04Amyc/Uis6HtwjDQ3V+AhetJ/yEyY7yRU=";
-    };
-  };
+  # barbecue = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  #   name = "barbecue";
+  #   src = pkgs.fetchFromGitHub {
+  #     owner = "utilyre";
+  #     repo = "barbecue.nvim";
+  #     rev = "a0e19486ccc1fb134f6ef7bf914d07bbb462e346";
+  #     hash = "sha256-oQwrCCgHt04Amyc/Uis6HtwjDQ3V+AhetJ/yEyY7yRU=";
+  #   };
+  # };
 
   persistence = pkgs.vimUtils.buildVimPluginFrom2Nix {
     name = "persistence";
@@ -82,11 +82,11 @@ let
 
       # navigation
       smart-splits
-      {
-        plugin = barbecue;
-        type = "lua";
-        config = "require('barbecue').setup({})";
-      }
+      # {
+      #   plugin = barbecue;
+      #   type = "lua";
+      #   config = "require('barbecue').setup({})";
+      # }
 
       # plugins set up here
       {
