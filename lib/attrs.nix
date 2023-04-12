@@ -1,4 +1,4 @@
-{ lib, ... }:
+{lib, ...}:
 with builtins;
 with lib; {
   filterMapAttrs = pred: f: attrs: filterAttrs pred (mapAttrs f attrs);

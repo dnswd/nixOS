@@ -1,14 +1,18 @@
-{ config, lib, pkgs, my, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  my,
+  ...
+}: let
   mkHotkeyChain = set:
     with lib.attrsets;
     with lib.strings;
-    listToAttrs (map (c: {
-      name = elemAt c 0;
-      value = elemAt c 1;
-    }) (collect isList
-      (mapAttrsRecursive (path: value: [ (concatStrings path) value ]) set)));
+      listToAttrs (map (c: {
+          name = elemAt c 0;
+          value = elemAt c 1;
+        }) (collect isList
+          (mapAttrsRecursive (path: value: [(concatStrings path) value]) set)));
   prefix = c: with lib.attrsets; mapAttrs' (n: v: nameValuePair "${c}${n}" v);
   plus = prefix " + ";
   chord = prefix " ; ";
@@ -46,7 +50,7 @@ in {
       "origin.exe".state = "floating";
       "explorer.exe".hidden = true;
     };
-    monitors = { Virtual1 = map toString (lib.lists.range 1 desks'); };
+    monitors = {Virtual1 = map toString (lib.lists.range 1 desks');};
     extraConfig = ''
       bspc desktop -l monocle
 

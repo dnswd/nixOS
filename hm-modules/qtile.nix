@@ -1,35 +1,42 @@
-{ lib, pkgs, config, ... }:
-with lib;
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+with lib; let
   cfg = config.xsession.windowManager.qtile;
-  indent = (t: concatStrings (genList (i: "    ") t));
-  parseKeybindings = (keys: ind:
-    let
-      parseKey = (key:
-        let
-          k = splitString "+" (replaceStrings [ " " ] [ "" ] key);
-          last = (length k) - 1;
-        in ''
-          [${
-            concatStringsSep ", "
-            (map (s: if s == "mod" then s else ''"${s}"'') (sublist 0 last k))
-          }], "${elemAt k last}"'');
-      parseChord = (key: val:
-        let mode = if val.mode == null then "" else ''mode = "${val.mode}"'';
-        in ''
-          KeyChord(${parseKey key}, [
-          ${indent (ind + 1)}${parseKeybindings val.keybindings (ind + 1)}],
-          ${indent ind}${mode})'');
-    in concatStringsSep ''
+  indent = t: concatStrings (genList (i: "    ") t);
+  parseKeybindings = keys: ind: let
+    parseKey = key: let
+      k = splitString "+" (replaceStrings [" "] [""] key);
+      last = (length k) - 1;
+    in ''
+      [${
+        concatStringsSep ", "
+        (map (s:
+          if s == "mod"
+          then s
+          else ''"${s}"'') (sublist 0 last k))
+      }], "${elemAt k last}"'';
+    parseChord = key: val: let
+      mode =
+        if val.mode == null
+        then ""
+        else ''mode = "${val.mode}"'';
+    in ''
+      KeyChord(${parseKey key}, [
+      ${indent (ind + 1)}${parseKeybindings val.keybindings (ind + 1)}],
+      ${indent ind}${mode})'';
+  in
+    concatStringsSep ''
       ,
-      ${indent ind}'' (map (k:
-        let val = getAttr k keys;
-        in if (isAttrs val) then
-          (parseChord k val)
-        else
-          "Key(${parseKey k}, ${val})") (attrNames keys)));
-
+      ${indent ind}'' (map (k: let
+      val = getAttr k keys;
+    in
+      if (isAttrs val)
+      then (parseChord k val)
+      else "Key(${parseKey k}, ${val})") (attrNames keys));
 in {
   options.xsession.windowManager.qtile = {
     enable = mkEnableOption "qtile window manager";
@@ -55,7 +62,7 @@ in {
         options = {
           keybindings = mkOption {
             type = keytype;
-            default = { };
+            default = {};
           };
           mode = mkOption {
             type = types.nullOr types.str;
@@ -63,10 +70,11 @@ in {
           };
         };
       };
-    in mkOption {
-      type = keytype;
-      default = { };
-    };
+    in
+      mkOption {
+        type = keytype;
+        default = {};
+      };
   };
 
   # manage qtile config

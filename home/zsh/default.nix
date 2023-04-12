@@ -1,5 +1,9 @@
-{ config, pkgs, lib, ... }: {
-
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./starship.nix
   ];
@@ -30,14 +34,26 @@
       # lutris = "WEBKIT_DISABLE_COMPOSITING_MODE=1 lutris";
       # neofetch = "fix_neofetch";
     };
-    
+
     zplug = {
       enable = true;
       plugins = [
-        { name = "plugins/tmux"; tags = [ from:oh-my-zsh ]; }
-        { name = "plugins/history"; tags = [ from:oh-my-zsh ]; }
-        { name = "plugins/history-substring-search"; tags = [ from:oh-my-zsh ]; }
-        { name = "plugins/colored-man-pages"; tags = [ from:oh-my-zsh ]; }
+        {
+          name = "plugins/tmux";
+          tags = [from:oh-my-zsh];
+        }
+        {
+          name = "plugins/history";
+          tags = [from:oh-my-zsh];
+        }
+        {
+          name = "plugins/history-substring-search";
+          tags = [from:oh-my-zsh];
+        }
+        {
+          name = "plugins/colored-man-pages";
+          tags = [from:oh-my-zsh];
+        }
       ];
     };
 

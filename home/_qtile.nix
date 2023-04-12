@@ -1,10 +1,12 @@
-{ pkgs, config, ... }:
-
 {
+  pkgs,
+  config,
+  ...
+}: {
   # Qtile custom module are sourced from:
   # https://github.com/addy419/configurations/blob/1d3a91dc6645c7785f432b41b862e46beccbb1db/modules/desktop/qtile.nix
 
-  imports = [ ../hm-modules/qtile.nix ];
+  imports = [../hm-modules/qtile.nix];
 
   xsession = {
     enable = true;
@@ -39,7 +41,7 @@
         "mod + control + j" = "lazy.function(shrink_window)";
         "mod + control + k" = "lazy.function(grow_window)";
         "mod + control + l" = "lazy.function(grow_master)";
-        
+
         "mod + q" = "lazy.window.kill()";
         "mod1 + F10" = "lazy.window.toggle_maximize()";
         "mod1 + f11" = "lazy.window.toggle_fullscreen()";
@@ -47,7 +49,7 @@
       };
       extraConfig = ''
         from libqtile import hook
-        
+
         # groups
         groups = [Group(str(i),label=str(i)) for i in range(1,10)]
         for i in groups:
@@ -102,7 +104,7 @@
         def screen(index):
             # barheight = 32
             # borderwidth = 3
-            # 
+            #
             # # groupbox
             # fontsize = 14
             # padding = 10

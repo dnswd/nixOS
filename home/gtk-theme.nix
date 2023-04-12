@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   gtk = {
     enable = true;
     theme = {
@@ -23,7 +23,7 @@
     };
   };
 
-  home.packages = with pkgs; [ xsettingsd ];
+  home.packages = with pkgs; [xsettingsd];
   home.file.".xsettingsd-light.conf".text = ''
     Net/ThemeName "WhiteSur-light"
   '';

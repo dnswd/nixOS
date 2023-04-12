@@ -1,23 +1,23 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ pkgs, username, ... }:
-
 {
-  imports =
-    [ 
-      ./hardware-configuration.nix
-    ];
+  pkgs,
+  username,
+  ...
+}: {
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   # Nix Configuration
   nix = {
     settings = {
-      trusted-users = [ "root" "halcyon" ];
-      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = ["root" "halcyon"];
+      experimental-features = ["nix-command" "flakes"];
     };
   };
-  
+
   # Nixpkgs allow unfree
   nixpkgs.config.allowUnfree = true;
 
@@ -25,7 +25,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  
+
   # Keychron function keys
   # tells modprobe to pass fnmode=0 by default when loading the hid_apple kernel module
   boot.extraModprobeConfig = ''
@@ -35,7 +35,7 @@
   networking.hostName = "msi"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Asia/Jakarta";
@@ -57,7 +57,7 @@
     LC_TELEPHONE = "id_ID.utf8";
     LC_TIME = "id_ID.utf8";
   };
-  
+
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
@@ -72,15 +72,15 @@
         enable = true;
       };
 
-    # Defer to home-manager configuration
-    #  defaultSession = "home-manager";
-    #  session = [
-    #    {
-    #      name = "home-manager";
-    #      manage = "desktop";
-    #      start = "exec $HOME/.xsession";
-    #    }
-    #  ];
+      # Defer to home-manager configuration
+      #  defaultSession = "home-manager";
+      #  session = [
+      #    {
+      #      name = "home-manager";
+      #      manage = "desktop";
+      #      start = "exec $HOME/.xsession";
+      #    }
+      #  ];
     };
   };
 
@@ -88,7 +88,6 @@
   #   gnome.at-spi2-core.enable = true;
   #   gnome.gnome-keyring.enable = true;
   # };
-    
 
   # Configure keymap in X11
   services.xserver = {
@@ -136,15 +135,15 @@
     ];
     fontconfig = {
       defaultFonts = {
-        emoji = [ "Twitter Color Emoji" ];
-        monospace = [ "LigaSF Mono Nerd Font" "FiraCode" ];
+        emoji = ["Twitter Color Emoji"];
+        monospace = ["LigaSF Mono Nerd Font" "FiraCode"];
         serif = [
           "New York Small"
           "New York Medium"
           "New York Large"
           "New York Extra Large"
         ];
-        sansSerif = [ "SF Pro Text" "SF Pro Display" ];
+        sansSerif = ["SF Pro Text" "SF Pro Display"];
       };
     };
   };
@@ -153,10 +152,10 @@
   users.users.${username} = {
     isNormalUser = true;
     description = "halcyon";
-    extraGroups = [ "networkmanager" "wheel" "docker" "audio" ];
+    extraGroups = ["networkmanager" "wheel" "docker" "audio"];
   };
   users.defaultUserShell = pkgs.zsh;
-  environment.pathsToLink = [ "/share/zsh" ];
+  environment.pathsToLink = ["/share/zsh"];
 
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
@@ -206,5 +205,3 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
 }
-
-

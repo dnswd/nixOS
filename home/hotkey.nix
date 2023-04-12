@@ -1,14 +1,18 @@
-{ config, lib, pkgs, my, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  my,
+  ...
+}: let
   mkHotkeyChain = set:
     with lib.attrsets;
     with lib.strings;
-    listToAttrs (map (c: {
-      name = elemAt c 0;
-      value = elemAt c 1;
-    }) (collect isList
-      (mapAttrsRecursive (path: value: [ (concatStrings path) value ]) set)));
+      listToAttrs (map (c: {
+          name = elemAt c 0;
+          value = elemAt c 1;
+        }) (collect isList
+          (mapAttrsRecursive (path: value: [(concatStrings path) value]) set)));
   prefix = c: with lib.attrsets; mapAttrs' (n: v: nameValuePair "${c}${n}" v);
   plus = prefix " + ";
   chord = prefix " ; ";
@@ -24,24 +28,24 @@ in {
   services.sxhkd = {
     enable = true;
     keybindings = mkHotkeyChain {
-    #   "alt + {_,shift + }Tab" = "bspc node -f {next,prev}.leaf.local.!sticky";
-    #   Print = "flameshot gui";
+      #   "alt + {_,shift + }Tab" = "bspc node -f {next,prev}.leaf.local.!sticky";
+      #   Print = "flameshot gui";
       "shift + Print" = "flameshot full -c";
 
       # sound
-    #   XF86AudioMute = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
-    #   XF86AudioRaiseVolume = "pactl set-sink-volume @DEFAULT_SINK@ +2%";
-    #   XF86AudioLowerVolume = "pactl set-sink-volume @DEFAULT_SINK@ -2%";
+      #   XF86AudioMute = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+      #   XF86AudioRaiseVolume = "pactl set-sink-volume @DEFAULT_SINK@ +2%";
+      #   XF86AudioLowerVolume = "pactl set-sink-volume @DEFAULT_SINK@ -2%";
 
-    #   XF86AudioPlay = "playerctl -p spotifyd play-pause";
+      #   XF86AudioPlay = "playerctl -p spotifyd play-pause";
 
       # headset/speakers toggle
-    #   "alt + XF86AudioPlay" = "audio_device_toggle";
-    #   "shift + XF86AudioPlay" =
-    #     "spt pb --transfer=Daemon; playerctl -p spotifyd play";
-    #   "shift + XF86AudioMute" = "systemctl --user restart spotifyd";
-    #   "shift + XF86AudioRaiseVolume" = "playerctl -p spotifyd next";
-    #   "shift + XF86AudioLowerVolume" = "playerctl -p spotifyd previous";
+      #   "alt + XF86AudioPlay" = "audio_device_toggle";
+      #   "shift + XF86AudioPlay" =
+      #     "spt pb --transfer=Daemon; playerctl -p spotifyd play";
+      #   "shift + XF86AudioMute" = "systemctl --user restart spotifyd";
+      #   "shift + XF86AudioRaiseVolume" = "playerctl -p spotifyd next";
+      #   "shift + XF86AudioLowerVolume" = "playerctl -p spotifyd previous";
 
       super = plus {
         # reload sxhkd

@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }: {
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   programs.tmux = {
     enable = true;
     terminal = "xterm-kitty";

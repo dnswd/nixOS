@@ -1,6 +1,10 @@
-{ config, lib, pkgs, my, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  my,
+  ...
+}: {
   # activate service when it's finally installed
   services.picom = {
     enable = true;

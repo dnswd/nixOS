@@ -1,5 +1,5 @@
-{ my, ... }:
-let p = my.palette;
+{my, ...}: let
+  p = my.palette;
 in ''
   @function gtkalpha($c,$a) {
     @return unquote("alpha(#{$c},#{$a})");
@@ -164,14 +164,14 @@ in ''
 
   @if $trans=='true' and $variant=='light' {
     $dark_sidebar_bg:                 rgba(if($colorscheme == 'nord', #eeeff2, ${
-      p."01"
-    }), 0.96);
+    p."01"
+  }), 0.96);
   }
 
   @if $trans=='false' and $variant=='light' {
     $dark_sidebar_bg:                 if($colorscheme == 'nord', #eeeff2, ${
-      p."01"
-    });
+    p."01"
+  });
   }
 
   @if $trans=='true' and $variant=='dark' {
@@ -179,8 +179,8 @@ in ''
       $dark_sidebar_bg:               rgba(if($darker == 'true', #22262e, #2b303b), 0.96);
     } @else {
       $dark_sidebar_bg:               rgba(if($darker == 'true', ${p."0D"}, ${
-        p."0D"
-      }), 0.96);
+    p."0D"
+  }), 0.96);
     }
   }
 
@@ -189,8 +189,8 @@ in ''
       $dark_sidebar_bg:               if($darker == 'true', #22262e, #2b303b);
     } @else {
       $dark_sidebar_bg:               if($darker == 'true', ${p."0D"}, ${
-        p."0D"
-      });
+    p."0D"
+  });
     }
   }
 
@@ -284,10 +284,10 @@ in ''
 
   @if $trans == 'true' and $panel_font == 'black' {
     $dash_bg:                         if($variant == 'light', rgba(${
-      p."03"
-    }, $panel_opacity/2 + 0.08), rgba(if($darker == 'true', ${p."0C"}, ${
-      p."0C"
-    }), $panel_opacity + 0.15));
+    p."03"
+  }, $panel_opacity/2 + 0.08), rgba(if($darker == 'true', ${p."0C"}, ${
+    p."0C"
+  }), $panel_opacity + 0.15));
   }
 
   @if $colorscheme == 'nord' {

@@ -1,7 +1,11 @@
-{ config, lib, pkgs, my, ... }:
-
 {
-  home.packages = with pkgs; [ libnotify ];
+  config,
+  lib,
+  pkgs,
+  my,
+  ...
+}: {
+  home.packages = with pkgs; [libnotify];
   services.dunst = {
     enable = true;
     settings = {

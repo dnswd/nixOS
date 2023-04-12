@@ -1,6 +1,8 @@
-{ pkgs, lib, ... }:
-
-let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   # List of custom packages
   smart-splits = pkgs.vimUtils.buildVimPluginFrom2Nix {
     name = "smart-splits";
@@ -41,125 +43,125 @@ let
       hash = "sha256-Yq68nxfapBbjZa4Gd6tRz8JNg8bWvCQjhzl1lCH+8bA=";
     };
   };
-  
+
   vimPlugin = with pkgs.vimPlugins; [
-      # plugins set up in nvim
-      impatient-nvim
+    # plugins set up in nvim
+    impatient-nvim
 
-      # color.lua
-      catppuccin-nvim
-      lualine-nvim
-      twilight-nvim
+    # color.lua
+    catppuccin-nvim
+    lualine-nvim
+    twilight-nvim
 
-      # telescope.lua
-      telescope-nvim
-      harpoon
+    # telescope.lua
+    telescope-nvim
+    harpoon
 
-      # lsp.lua
-      rust-tools-nvim
-      nvim-lspconfig
-      nvim-treesitter-refactor
-      nvim-treesitter-textobjects
-      nvim-treesitter.withAllGrammars
-      playground
-      nvim-navic
+    # lsp.lua
+    rust-tools-nvim
+    nvim-lspconfig
+    nvim-treesitter-refactor
+    nvim-treesitter-textobjects
+    nvim-treesitter.withAllGrammars
+    playground
+    nvim-navic
 
-      # Completions
-      cmp-buffer
-      cmp-cmdline
-      cmp-nvim-lsp
-      cmp-nvim-lsp-signature-help
-      cmp-path
-      lspkind-nvim
-      nvim-cmp
+    # Completions
+    cmp-buffer
+    cmp-cmdline
+    cmp-nvim-lsp
+    cmp-nvim-lsp-signature-help
+    cmp-path
+    lspkind-nvim
+    nvim-cmp
 
-      # Snippets
-      luasnip
-      cmp_luasnip
+    # Snippets
+    luasnip
+    cmp_luasnip
 
-      # formatter.lua
-      neoformat
+    # formatter.lua
+    neoformat
 
-      # navigation
-      smart-splits
-      # {
-      #   plugin = barbecue;
-      #   type = "lua";
-      #   config = "require('barbecue').setup({})";
-      # }
+    # navigation
+    smart-splits
+    # {
+    #   plugin = barbecue;
+    #   type = "lua";
+    #   config = "require('barbecue').setup({})";
+    # }
 
-      # plugins set up here
-      {
-        plugin = gitsigns-nvim;
-        type = "lua";
-        config = ''
+    # plugins set up here
+    {
+      plugin = gitsigns-nvim;
+      type = "lua";
+      config = ''
         require('gitsigns').setup({
           sign_priority = 0
           })
-        '';
-      }
-      {
-        plugin = which-key-nvim;
-        type = "lua";
-        config = "require('which-key').setup()";
-      }
-      {
-        plugin = nvim-autopairs;
-        type = "lua";
-        config = "require('nvim-autopairs').setup()";
-      }
-      {
-        plugin = nvim-surround;
-        type = "lua";
-        config = "require('nvim-surround').setup()";
-      }
-      {
-        plugin = comment-nvim;
-        type = "lua";
-        config = "require('Comment').setup()";
-      }
-      {
-        plugin = leap-nvim;
-        type = "lua";
-        config = "require('leap').add_default_mappings()";
-      }
-      {
-        plugin = fidget-nvim;
-        type = "lua";
-        config = "require('fidget').setup()";
-      }
-      {
-        plugin = indent-blankline-nvim;
-        type = "lua";
-        config = ''require('indent_blankline').setup({
-          show_current_context = true,
-          show_current_context_start = true,
-        })'';
-      }
-      {
-        plugin = nvim-lastplace;
-        type = "lua";
-        config = "require('nvim-lastplace').setup()";
-      }
-      {
-        plugin = trouble-nvim;
-        type = "lua";
-        config = "require('trouble').setup()";
-      }
-      {
-        plugin = toggleterm-nvim;
-        type = "lua";
-        config = "require('toggleterm').setup()";
-      }
-      {
-        plugin = persistence;
-        type = "lua";
-        config = "require('persistence').setup()";
-      }
-      {
-        plugin = nvim-tree-lua;
-        type = "lua";
-        config = ''
+      '';
+    }
+    {
+      plugin = which-key-nvim;
+      type = "lua";
+      config = "require('which-key').setup()";
+    }
+    {
+      plugin = nvim-autopairs;
+      type = "lua";
+      config = "require('nvim-autopairs').setup()";
+    }
+    {
+      plugin = nvim-surround;
+      type = "lua";
+      config = "require('nvim-surround').setup()";
+    }
+    {
+      plugin = comment-nvim;
+      type = "lua";
+      config = "require('Comment').setup()";
+    }
+    {
+      plugin = leap-nvim;
+      type = "lua";
+      config = "require('leap').add_default_mappings()";
+    }
+    {
+      plugin = fidget-nvim;
+      type = "lua";
+      config = "require('fidget').setup()";
+    }
+    {
+      plugin = indent-blankline-nvim;
+      type = "lua";
+      config = ''        require('indent_blankline').setup({
+                  show_current_context = true,
+                  show_current_context_start = true,
+                })'';
+    }
+    {
+      plugin = nvim-lastplace;
+      type = "lua";
+      config = "require('nvim-lastplace').setup()";
+    }
+    {
+      plugin = trouble-nvim;
+      type = "lua";
+      config = "require('trouble').setup()";
+    }
+    {
+      plugin = toggleterm-nvim;
+      type = "lua";
+      config = "require('toggleterm').setup()";
+    }
+    {
+      plugin = persistence;
+      type = "lua";
+      config = "require('persistence').setup()";
+    }
+    {
+      plugin = nvim-tree-lua;
+      type = "lua";
+      config = ''
         require('nvim-tree').setup({
           update_focused_file = {
             enable = true,
@@ -167,17 +169,17 @@ let
             update_root = true,
           },
         })'';
-      }
-      markdown-preview-nvim
-      nvim-web-devicons
-      no-neck-pain
-      zen-mode-nvim
+    }
+    markdown-preview-nvim
+    nvim-web-devicons
+    no-neck-pain
+    zen-mode-nvim
   ];
 
   vimPluginUnstable = with pkgs.unstable.vimPlugins; [
-      copilot-lua
-      copilot-cmp
-      winshift-nvim
+    copilot-lua
+    copilot-cmp
+    winshift-nvim
   ];
 
   # Use customRC for simple config but if you want your configuration to be in multiple files, you
@@ -190,8 +192,7 @@ let
     # lua require("init")
     src = ./nvim-lua;
   };
-in
-{
+in {
   programs.neovim = {
     enable = true;
     viAlias = true;

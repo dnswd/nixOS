@@ -1,5 +1,10 @@
-{ pkgs, lib, inputs, my, ... }:
-
+{
+  pkgs,
+  lib,
+  inputs,
+  my,
+  ...
+}:
 pkgs.stdenv.mkDerivation rec {
   name = "whitesur-gtk";
   src = inputs.whitesur;
@@ -18,11 +23,13 @@ pkgs.stdenv.mkDerivation rec {
 
   postPatch = let
     colors =
-      builtins.toFile "_colors.scss" (import ./colors.nix { inherit my; });
-    colors-public = builtins.toFile "_colors-public.scss"
-      (import ./colors-public.nix { inherit my; });
-    colors-palette = builtins.toFile "_colors-palette.scss"
-      (import ./colors-palette.nix { inherit my; });
+      builtins.toFile "_colors.scss" (import ./colors.nix {inherit my;});
+    colors-public =
+      builtins.toFile "_colors-public.scss"
+      (import ./colors-public.nix {inherit my;});
+    colors-palette =
+      builtins.toFile "_colors-palette.scss"
+      (import ./colors-palette.nix {inherit my;});
   in ''
     find -name "*.sh" -print0 | while IFS= read -r -d ''' file; do
       patchShebangs "$file"

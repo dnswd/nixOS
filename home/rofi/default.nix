@@ -1,7 +1,12 @@
-{ config, pkgs, my, ... }: {
+{
+  config,
+  pkgs,
+  my,
+  ...
+}: {
   programs.rofi = {
     enable = true;
-    plugins = with pkgs; [ rofi-emoji ];
+    plugins = with pkgs; [rofi-emoji];
     extraConfig = {
       modi = "drun,emoji";
       font = "sans 16px";
@@ -15,7 +20,8 @@
   xdg.configFile."rofi/index.rasi".source = ./index.rasi;
   xdg.configFile."rofi/power.rasi".source = ./power.rasi;
   xdg.configFile."rofi/emoji.rasi".source = ./emoji.rasi;
-  xdg.configFile."rofi/light.rasi".text = let t = my.palette;
+  xdg.configFile."rofi/light.rasi".text = let
+    t = my.palette;
   in ''
     * {
       t-bg: ${t."00"}B3;
@@ -26,7 +32,8 @@
       t-select: ${t."00"};
     }
   '';
-  xdg.configFile."rofi/dark.rasi".text = let t = my.palette;
+  xdg.configFile."rofi/dark.rasi".text = let
+    t = my.palette;
   in ''
     * {
       t-bg: ${t."0F"}B3;
