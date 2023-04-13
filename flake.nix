@@ -74,19 +74,18 @@
     homeModules = lib.my.importFrom ./home ++ [(import ./users/${username}/home.nix)];
 
     nixModules = u: [
-        nixConfig
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            inherit extraSpecialArgs;
-            backupFileExtension = "backup";
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.${u} = { imports = homeModules; };
-          };
-        }
-      ];
-
+      nixConfig
+      home-manager.nixosModules.home-manager
+      {
+        home-manager = {
+          inherit extraSpecialArgs;
+          backupFileExtension = "backup";
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          users.${u} = {imports = homeModules;};
+        };
+      }
+    ];
   in rec {
     # Run `nix fmt` to reformat the nix files
     formatter.${system} = pkgs.alejandra;
@@ -95,7 +94,5 @@
       inherit system;
       modules = nixModules username;
     };
-
-    packages.${system}.default = nixosConfigurations.${hostname};
   };
 }
