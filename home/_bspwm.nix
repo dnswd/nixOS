@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  my,
+  scheme,
   ...
 }: let
   mkHotkeyChain = set:
@@ -23,7 +23,7 @@
   desks' = 4;
   desks = "{1-${toString desks'}}";
   top_padding = 32;
-  t = my.palette;
+  t = scheme.palette;
 in {
   xsession.windowManager.bspwm = {
     enable = true;

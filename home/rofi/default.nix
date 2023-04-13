@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  my,
+  scheme,
   ...
 }: {
   programs.rofi = {
@@ -21,7 +21,7 @@
   xdg.configFile."rofi/power.rasi".source = ./power.rasi;
   xdg.configFile."rofi/emoji.rasi".source = ./emoji.rasi;
   xdg.configFile."rofi/light.rasi".text = let
-    t = my.palette;
+    t = scheme.palette;
   in ''
     * {
       t-bg: ${t."00"}B3;
@@ -33,7 +33,7 @@
     }
   '';
   xdg.configFile."rofi/dark.rasi".text = let
-    t = my.palette;
+    t = scheme.palette;
   in ''
     * {
       t-bg: ${t."0F"}B3;

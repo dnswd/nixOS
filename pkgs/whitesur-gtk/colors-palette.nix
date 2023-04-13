@@ -1,5 +1,5 @@
-{my, ...}: let
-  p = my.palette;
+{scheme, ...}: let
+  p = scheme.palette;
 in ''
   //
   // Normal colors

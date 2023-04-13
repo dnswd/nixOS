@@ -5,8 +5,7 @@
 }: {
   # Qtile custom module are sourced from:
   # https://github.com/addy419/configurations/blob/1d3a91dc6645c7785f432b41b862e46beccbb1db/modules/desktop/qtile.nix
-
-  imports = [../hm-modules/qtile.nix];
+  imports = [./__custom-modules/qtile.nix];
 
   xsession = {
     enable = true;

@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  my,
+  scheme,
   ...
 }: {
   # activate service when it's finally installed
@@ -120,7 +120,7 @@
     #     strength = 12;
     #   };
 
-    #   shadow-color = my.palette."0F";
+    #   shadow-color = scheme.palette."0F";
     #   shadow-radius = 24;
     #   shadow-offset-x = -shadow-radius + 0;
     #   shadow-offset-y = -shadow-radius + 8;

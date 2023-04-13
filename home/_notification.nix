@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  my,
+  scheme,
   ...
 }: {
   home.packages = with pkgs; [libnotify];
@@ -18,7 +18,7 @@
         transparency = 0;
         separator_height = 1;
         frame_width = 1;
-        frame_color = my.palette."05";
+        frame_color = scheme.palette."05";
         padding = 16;
         horizontal_padding = 16;
         text_icon_padding = 16;
@@ -32,18 +32,18 @@
         gap_size = 8;
       };
       urgency_low = {
-        background = my.palette."00";
-        foreground = my.palette."0F";
+        background = scheme.palette."00";
+        foreground = scheme.palette."0F";
         timeout = 10;
       };
       urgency_normal = {
-        background = my.palette."00";
-        foreground = my.palette."0F";
+        background = scheme.palette."00";
+        foreground = scheme.palette."0F";
         timeout = 10;
       };
       urgency_critical = {
-        background = my.palette."00";
-        foreground = my.palette."0F";
+        background = scheme.palette."00";
+        foreground = scheme.palette."0F";
         timeout = 0;
       };
     };

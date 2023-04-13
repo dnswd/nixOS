@@ -1,5 +1,5 @@
-{my, ...}: let
-  p = my.palette;
+{scheme, ...}: let
+  p = scheme.palette;
 in ''
   //apps rely on some named colors to be exported
 

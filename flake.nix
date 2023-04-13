@@ -49,6 +49,11 @@
         inherit pkgs inputs;
         lib = final;
       };
+
+      scheme = import ./scheme {
+        inherit pkgs inputs;
+        lib = final;
+      };
     });
 
     pkgs = mkPkgs {
@@ -57,7 +62,7 @@
           my = lib.my.mapModules ./pkgs (p:
             prev.callPackage p {
               inherit inputs;
-              inherit (lib) my;
+              inherit (lib) my scheme;
             });
           unstable = mkUnstablePkgs {};
         })
@@ -66,14 +71,14 @@
 
     extraSpecialArgs = {
       inherit pkgs system hostname username;
-      inherit (lib) my;
+      inherit (lib) my scheme;
     };
 
     nixConfig =
       import ./system/${hostname}/configuration.nix
       (extraSpecialArgs // {inherit lib;});
 
-    homeModules = lib.my.importFrom ./home;
+    homeModules = lib.my.importFrom ./home ++ [(import ./users/${username}/home.nix)];
   in rec {
     # Run `nix fmt` to reformat the nix files
     formatter.${system} = pkgs.alejandra;
@@ -90,7 +95,7 @@
             useGlobalPkgs = true;
             useUserPackages = true;
             users.${username} = {
-              imports = homeModules ++ [(import ./users/${username}/home.nix)];
+              imports = homeModules;
             };
           };
         }

@@ -37,6 +37,3 @@ case "$1" in
     done
     direnv allow
 esac
-
-    
-

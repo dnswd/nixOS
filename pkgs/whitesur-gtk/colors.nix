@@ -1,5 +1,5 @@
-{my, ...}: let
-  p = my.palette;
+{scheme, ...}: let
+  p = scheme.palette;
 in ''
   @function gtkalpha($c,$a) {
     @return unquote("alpha(#{$c},#{$a})");
