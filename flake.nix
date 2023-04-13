@@ -30,15 +30,8 @@
     username = "halcyon";
     hostname = "msi";
 
-    mkPkgs = o:
-      import nixpkgs ({
-          config.allowUnfree = true;
-          localSystem = {inherit system;};
-        }
-        // o);
-
-    mkUnstablePkgs = o:
-      import nixpkgsUnstable ({
+    mkChannel = c: o:
+      import c ({
           config.allowUnfree = true;
           localSystem = {inherit system;};
         }
@@ -56,7 +49,7 @@
       };
     });
 
-    pkgs = mkPkgs {
+    pkgs = mkChannel nixpkgs {
       overlays = [
         (final: prev: rec {
           my = lib.my.mapModules ./pkgs (p:
@@ -64,7 +57,7 @@
               inherit inputs;
               inherit (lib) my scheme;
             });
-          unstable = mkUnstablePkgs {};
+          unstable = mkChannel nixpkgsUnstable {};
         })
       ];
     };
@@ -94,9 +87,7 @@
             backupFileExtension = "backup";
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.${username} = {
-              imports = homeModules;
-            };
+            users.${username} = { imports = homeModules; };
           };
         }
       ];
