@@ -4,8 +4,12 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-22.11";
     nixpkgsUnstable.url = "nixpkgs/nixos-unstable";
+
     home-manager.url = "github:nix-community/home-manager/release-22.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-ld.url = "github:Mic92/nix-ld";
+    nix-ld.inputs.nixpkgs.follows = "nixpkgs";
 
     apple-nerd-fonts = {
       flake = false;
@@ -24,15 +28,18 @@
     nixpkgs,
     nixpkgsUnstable,
     home-manager,
+    nix-ld,
     ...
   } @ inputs: let
     system = "x86_64-linux";
     username = "halcyon";
     hostname = "msi";
 
-    mkChannel = c: o:
+    mkPkgs = c: o:
       import c ({
+          # options: https://github.com/NixOS/nixpkgs/blob/2657fbd90d791e10196de892f24c17b8d2ce8eda/pkgs/top-level/config.nix#L84
           config.allowUnfree = true;
+          config.warnUndeclaredOptions = true;
           localSystem = {inherit system;};
         }
         // o);
@@ -49,15 +56,16 @@
       };
     });
 
-    pkgs = mkChannel nixpkgs {
+    pkgs = mkPkgs nixpkgs {
       overlays = [
         (final: prev: rec {
+          # custom packages under pkgs.my
           my = lib.my.mapModules ./pkgs (p:
             prev.callPackage p {
               inherit inputs;
               inherit (lib) my scheme;
             });
-          unstable = mkChannel nixpkgsUnstable {};
+          unstable = mkPkgs nixpkgsUnstable {};
         })
       ];
     };
@@ -75,8 +83,7 @@
 
     nixModules = u: [
       nixConfig
-      home-manager.nixosModules.home-manager
-      {
+      home-manager.nixosModules.home-manager {
         home-manager = {
           inherit extraSpecialArgs;
           backupFileExtension = "backup";
@@ -85,6 +92,7 @@
           users.${u} = {imports = homeModules;};
         };
       }
+      nix-ld.nixosModules.nix-ld
     ];
   in rec {
     # Run `nix fmt` to reformat the nix files
