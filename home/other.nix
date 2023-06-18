@@ -23,6 +23,11 @@
 
     # theming
     fontforge-gtk
+    dconf
+
+    # mac apps
+    darling
+    darling-dmg
 
     # ricing stuffs
     xorg.xev

@@ -2,10 +2,10 @@
   description = "dnswd's dotfiles";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-22.11";
+    nixpkgs.url = "nixpkgs/nixos-23.05";
     nixpkgsUnstable.url = "nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager/release-22.11";
+    home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-ld.url = "github:Mic92/nix-ld";
@@ -33,7 +33,7 @@
   } @ inputs: let
     system = "x86_64-linux";
     username = "halcyon";
-    hostname = "msi";
+    hostname = "ikigai";
 
     mkPkgs = c: o:
       import c ({
@@ -86,7 +86,6 @@
       home-manager.nixosModules.home-manager {
         home-manager = {
           inherit extraSpecialArgs;
-          backupFileExtension = "backup";
           useGlobalPkgs = true;
           useUserPackages = true;
           users.${u} = {imports = homeModules;};
