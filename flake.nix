@@ -33,7 +33,7 @@
   } @ inputs: let
     system = "x86_64-linux";
     username = "halcyon";
-    hostname = "ikigai";
+    hostname = "msi";
 
     mkPkgs = c: o:
       import c ({
@@ -79,7 +79,7 @@
       import ./system/${hostname}/configuration.nix
       (extraSpecialArgs // {inherit lib;});
 
-    homeModules = lib.my.importFrom ./home ++ [(import ./users/${username}/home.nix)];
+    homeModules = [(import ./users/${username}/home.nix)] ++ lib.my.importFrom ./home;
 
     nixModules = u: [
       nixConfig

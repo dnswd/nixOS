@@ -153,6 +153,11 @@
     isNormalUser = true;
     description = "halcyon";
     extraGroups = ["networkmanager" "wheel" "docker" "audio"];
+
+    # Authorized OpenSSH Keys
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCu47r2gzeMMc3PEJj7CVovonXpY6xOo+gUyeMNi6XzShlUqkBVoybQsZGP1y04EfqfylXIr6sIrV6GK0R+ucvFgIvg8FAiPXGFsxIQ5RHfT9cZcPwgQRMcWGc4+qKvdO7tYwu12eHRXeIgR8JaPvMJc5AguwSMNevFhWlVzdVZYOiYdj+hhJek+A/0BfTaQwUzSoMz28s+fSE3rILIbDu6wTYCvxnRyddV0B4/3VY87JZjeQgeLBNiXYRiACtqU1KQ7fDmYYfVTOgJVZL9uZ8Wr16OV/Jkcy0E9y3j/5NMi5g1gQmclRca8e+FZ5EsORNL5tBLFUJeWe9Jh2J/mb9WQOlJXyDLzMfyh6lTQdHlRN/c9rm03XHxFzcDa6qPVJQcCHrEsZwkPUt3mTEIK/EBrKpPsB/nq1IQtQgsM8FUlnGf9NHHsK2Cd5TeN/mHyTlEeG3PtGpZfIbR7I3DOgkCHNhkzE08mk8Gor7N2mtX7hTNT27rZuBJepbqK/qQcLM= halcyon"
+    ];
   };
   users.defaultUserShell = pkgs.zsh;
   environment.pathsToLink = ["/share/zsh"];
@@ -169,6 +174,7 @@
 
   # Enable dconf for GTK
   programs.dconf.enable = true;
+  programs.zsh.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -184,13 +190,17 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+    # settings.kbdInteractiveAuthentication = false;
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
